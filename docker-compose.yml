@@ -1,0 +1,20 @@
+# File: docker-compose.yml
+services:
+  hermes:
+    build: .
+    container_name: hermes_bsc
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Mapping folder lokal ke dalam container agar memori agen tidak hilang saat direstart
+      - ./data/memory:/app/memory
+      - ./config:/app/config
+    ports:
+      - "3000:3000" # Akses API/UI lokal (sesuaikan dengan port default Hermes)
+    networks:
+      - hermes_net
+
+networks:
+  hermes_net:
+    driver: bridge
